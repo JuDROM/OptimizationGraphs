@@ -83,6 +83,8 @@
   display: flex;
   flex-direction: column;
   padding: 0; /* El canvas no necesita padding */
+  /* IMPORTANT: allow children to shrink properly inside flex containers */
+  min-height: 0;
 }
 
 /* <botonesEditor(verde)/> */
@@ -133,29 +135,25 @@
   scrollbar-color: #ccc #eee;
 }
 
-/* Clases de colores (ahora solo para referencia, no aplican color) */
-.header-negro {
-  /* Estilos específicos si los necesitas, e.g., padding */
-}
-.controls-rojo {
-  /* (Los botones internos .btn tomarán el estilo azul de styles.css) */
-}
-.panel-verde {
-  /* (Los botones internos .btn tomarán el estilo azul de styles.css) */
-}
-.panel-gris {
-  /* Estilos específicos de la matriz */
-}
 .grafo-azul {
   padding: 0; /* El grafo no debe tener padding interno */
   overflow: hidden; 
 }
-.panel-morado {
-  /* Estilos específicos de matemática */
+
+/* Ensure the vis Network canvas fills the panel and won't be clipped
+   by parent flex containers. */
+.canvas-container {
+  flex: 1 1 auto; /* occupy remaining space inside .panel-grafo */
+  min-height: 0; /* allow flex children to shrink properly */
+  display: flex;
 }
-.panel-vino {
-  /* Estilos específicos de resultados */
+
+.graph-canvas {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
 }
+
 
 /* Títulos dentro de los paneles */
 .panel-matriz h3,
