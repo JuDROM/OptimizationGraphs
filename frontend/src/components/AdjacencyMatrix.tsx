@@ -1,0 +1,91 @@
+// frontend/src/components/AdjacencyMatrix.tsx
+import React from 'react';
+import { nodeNameFromIndex } from '../utils';
+import type { Matrix, HoverRC } from '../types';
+
+interface MatrixProps {
+  matrix: Matrix;
+  numNodes: number;
+  isDirected: boolean;
+  hoverRC: HoverRC;
+  onCellChange: (i: number, j: number, value: string) => void;
+  onCellEnter: (i: number, j: number) => void;
+  onCellLeave: () => void;
+}
+
+export default function AdjacencyMatrix({
+  matrix,
+  numNodes,
+  isDirected,
+  hoverRC,
+  onCellChange,
+  onCellEnter,
+  onCellLeave,
+}: MatrixProps): React.JSX.Element {
+  return (
+    <section className="matrix-container">
+      <table className="adjacency-matrix">
+        <thead>
+          <tr>
+            <th></th>
+            {Array.from({ length: numNodes }).map((_, j) => (
+              <th
+                key={'h' + j}
+                // --- LÓGICA DE CLASE SIMPLIFICADA ---
+                className={
+                  hoverRC.col === j
+                    ? 'hover-col'
+                    : ''
+                }
+              >
+                {nodeNameFromIndex(j)}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {Array.from({ length: numNodes }).map((_, i) => (
+            <tr
+              key={'r' + i}
+              // --- LÓGICA DE CLASE SIMPLIFICADA ---
+              className={
+                hoverRC.row === i
+                  ? 'hover-row'
+                  : ''
+              }
+            >
+              <th
+                className={
+                  hoverRC.col === i ? 'hover-col' : ''
+                }
+              >
+                {nodeNameFromIndex(i)}
+              </th>
+              {Array.from({ length: numNodes }).map((_, j) => (
+                <td
+                  key={`c-${i}-${j}`}
+                  onMouseEnter={() => onCellEnter(i, j)}
+                  onMouseLeave={onCellLeave}
+                  // --- LÓGICA DE CLASE SIMPLIFICADA ---
+                  className={
+                    hoverRC.col === j
+                      ? 'hover-col'
+                      : ''
+                  }
+                >
+                  <input
+                    className="matrix-input"
+                    value={(matrix[i] && matrix[i][j]) || ''}
+                    onChange={(e) => onCellChange(i, j, e.target.value)}
+                    disabled={!isDirected && i > j}
+                    inputMode="numeric"
+                  />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </section>
+  );
+}

@@ -1,0 +1,181 @@
+/* NUEVO GraphEditor.css
+  Basado en Flexbox con el tema limpio (fondo gris, paneles blancos).
+*/
+
+/* <div todo> */
+.editor-root {
+  display: flex;
+  flex-direction: column; /* Apila verticalmente: [main-content] y [main-footer] */
+  height: 100vh;
+  max-height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  /* CAMBIO: Fondo de todo es gris */
+  background-color: #f0f2f5; 
+  gap: 10px; /* Espacio entre el contenido principal y el footer */
+  padding: 10px;
+}
+
+/* <div horizontal secondMain> */
+.main-content {
+  flex: 1; /* Ocupa todo el espacio vertical disponible (después del footer) */
+  display: flex;
+  flex-direction: row; /* Apila horizontalmente: [main-left-column] y [panel-lateral] */
+  gap: 10px;
+  overflow: hidden; /* Evita desbordes */
+  min-height: 0; /* Requerido para que flex: 1 funcione correctamente en vertical */
+}
+
+/* <div vertical headerMatrizybotones> */
+.main-left-column {
+  flex: 3; /* Ocupa más espacio que el panel lateral */
+  display: flex;
+  flex-direction: column; /* Apila verticalmente: [main-header] y [matriz-vista-container] */
+  gap: 10px;
+  min-width: 0; /* Requerido para flex */
+}
+
+/* <header horizontal> */
+.main-header {
+  display: flex;
+  flex-direction: row; /* Apila horizontalmente: [header-titulo] y [header-controles] */
+  gap: 10px;
+  align-items: stretch; /* Estira ambos al mismo alto */
+}
+
+.header-titulo {
+  flex-shrink: 0; /* No se encoge (título fijo) */
+  margin-right: 10px; /* Separación pedida */
+}
+
+.header-controles {
+  flex: 1; /* Ocupa el resto del espacio */
+}
+
+/* Estilo para botones horizontales dentro de ControlsTop */
+.header-controles .controls-top {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; /* Si no caben, bajan */
+  gap: 8px;
+  align-items: center;
+}
+
+/* <div matrizvista> */
+.matriz-vista-container {
+  flex: 1; /* Ocupa todo el espacio vertical restante en la columna izquierda */
+  display: flex;
+  flex-direction: row; /* Apila horizontalmente: [panel-matriz] y [panel-grafo] */
+  gap: 10px;
+  min-height: 0; /* Requerido para flex */
+}
+
+.panel-matriz {
+  flex: 1; /* Ocupa 1 parte */
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-grafo {
+  flex: 2; /* Ocupa 2 partes (más grande) */
+  display: flex;
+  flex-direction: column;
+  padding: 0; /* El canvas no necesita padding */
+}
+
+/* <botonesEditor(verde)/> */
+.panel-lateral {
+  flex: 1; /* Ocupa 1 parte (igual que matriz) */
+  display: flex;
+  flex-direction: column;
+  min-width: 280px; /* Ancho mínimo para que los botones se vean bien */
+}
+
+/* <div horizontal> (footer) */
+.main-footer {
+  flex-shrink: 0; /* No se encoge, altura fija basada en contenido */
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  min-height: 150px; /* Altura mínima para el footer */
+  max-height: 25vh; /* Altura máxima del 25% de la pantalla */
+}
+
+.panel-matematica,
+.panel-resultados {
+  flex: 1; /* Ambos paneles del footer ocupan el mismo espacio */
+  display: flex;
+  flex-direction: column;
+}
+
+/* === ESTILOS VISUALES (TEMA LIMPIO) === */
+
+/* Estilo base para todos los paneles */
+.header-titulo,
+.header-controles,
+.panel-matriz,
+.panel-grafo,
+.panel-lateral,
+.panel-matematica,
+.panel-resultados {
+  /* CAMBIO: Fondo blanco */
+  background: #ffffff;
+  /* CAMBIO: Texto oscuro */
+  color: #333;
+  border: 1px solid #ddd; /* Borde sutil para ver los paneles */
+  padding: 15px;
+  border-radius: 6px;
+  box-sizing: border-box;
+  overflow-y: auto; /* Permite scroll interno si el contenido es muy grande */
+  scrollbar-width: thin;
+  scrollbar-color: #ccc #eee;
+}
+
+/* Clases de colores (ahora solo para referencia, no aplican color) */
+.header-negro {
+  /* Estilos específicos si los necesitas, e.g., padding */
+}
+.controls-rojo {
+  /* (Los botones internos .btn tomarán el estilo azul de styles.css) */
+}
+.panel-verde {
+  /* (Los botones internos .btn tomarán el estilo azul de styles.css) */
+}
+.panel-gris {
+  /* Estilos específicos de la matriz */
+}
+.grafo-azul {
+  padding: 0; /* El grafo no debe tener padding interno */
+  overflow: hidden; 
+}
+.panel-morado {
+  /* Estilos específicos de matemática */
+}
+.panel-vino {
+  /* Estilos específicos de resultados */
+}
+
+/* Títulos dentro de los paneles */
+.panel-matriz h3,
+.panel-lateral h3,
+.panel-matematica h3,
+.panel-resultados h3 {
+  margin-top: 0;
+  padding-bottom: 5px;
+  /* CAMBIO: Borde oscuro */
+  border-bottom: 1px solid #eee;
+  color: #111; /* Títulos un poco más oscuros */
+}
+
+/* H1 del header */
+.header-titulo h1 {
+  margin-top: 0;
+  font-size: 1.2rem; /* Más pequeño */
+}
+.header-titulo p {
+  font-size: 0.8rem;
+  color: #555;
+  margin: 4px 0 0 0;
+}

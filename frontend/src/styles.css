@@ -1,0 +1,249 @@
+/* frontend/src/styles.css */
+
+:root {
+  --bg: #ffffff;
+  --panel: #fafafa;
+  --accent: #007bff; /* Azul para cabeceras y botones activos */
+  --accent-light: #e6f2ff;
+  --text-light: #ffffff;
+  --text-dark: #333;
+  --border-light: #e0e0e0;
+  --shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  --table-radius: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Inter, Roboto, Arial, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-dark);
+  margin: 18px;
+}
+
+.app-root {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+header p {
+  color: #555;
+  margin-top: 6px;
+  margin-bottom: 24px;
+}
+
+/* --- Estilos de Botones --- */
+.btn {
+  padding: 8px 14px;
+  border: 1px solid var(--border-light);
+  background: #fff;
+  color: var(--text-dark);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.btn:hover {
+  border-color: #c0c0c0;
+  background: #f9f9f9;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn.active {
+  background: var(--accent);
+  color: var(--text-light);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+/* --- Layout Principal --- */
+.editor-layout {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 20px;
+  align-items: flex-start; /* Asegura que los paneles se alineen arriba */
+}
+
+/* Panel Izquierdo: Controles y Matriz */
+.panel-left {
+  flex: 1;
+  min-width: 450px; 
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Panel Derecho: Grafo y Controles Laterales */
+.panel-right {
+  flex: 2; 
+  min-width: 400px;
+  display: flex;
+  gap: 20px;
+  /* El panel derecho se alinea con el izquierdo */
+  align-self: stretch; 
+}
+
+/* --- CLASES DE CANVAS ELIMINADAS --- */
+/* .canvas-container { ... } eliminado */
+/* .graph-canvas { ... } eliminado */
+
+.graph-editor-root {
+  background: #a5a6ae;
+}
+/* Controles Laterales (al lado del grafo) */
+.lateral-controls {
+  flex: 0 0 220px; 
+  background: var(--panel);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-self: stretch; /* Se estira a la altura del panel derecho */
+}
+
+.lateral-controls .toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lateral-controls .selected-nodes {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-light);
+}
+
+.lateral-controls .selected-nodes strong {
+  display: block;
+  margin-bottom: 8px;
+}
+.lateral-controls .selected-nodes div {
+  font-size: 0.9rem;
+  padding: 4px 0;
+}
+
+
+/* --- Controles Superiores y Matriz --- */
+.controls-top {
+  background: var(--panel);
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  display:inline;
+  gap: 14px;
+}
+.input-row,
+.actions-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.matrix-container {
+  flex-grow: 1;
+  overflow: auto;
+  background: var(--panel);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  max-height: 70vh; /* Límite de altura para la matriz */
+}
+
+/* --- Estilos de Matriz Actualizados --- */
+.adjacency-matrix {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 100%;
+  background: #fff;
+  border-radius: var(--table-radius);
+  overflow: hidden;
+}
+
+.adjacency-matrix thead th {
+  position: sticky;
+  top: 0;
+  background: var(--accent);
+  color: var(--text-light);
+  padding: 10px;
+  text-align: center;
+  font-weight: 600;
+  z-index: 1;
+}
+
+.adjacency-matrix th,
+.adjacency-matrix td {
+  padding: 6px;
+  text-align: center;
+  border: none;
+}
+
+.adjacency-matrix tbody tr th {
+  background: var(--accent); 
+  color: var(--text-light); 
+  font-weight: 600;
+  position: sticky;
+  left: 0;
+}
+
+.matrix-input {
+  width: 60px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+.adjacency-matrix td:hover,
+.matrix-input:focus {
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.hover-row,
+.selected-row {
+  background: var(--accent-light);
+}
+.hover-col,
+.selected-col {
+  background: var(--accent-light);
+}
+
+/* Sección de Resultados */
+.results {
+  width: 100%;
+  margin-top: 20px;
+  background: var(--panel);
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.results h3 {
+  margin-top: 0;
+}
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 1200px) {
+  .panel-left { min-width: 100%; }
+  .panel-right { min-width: 100%; }
+}
+
+@media (max-width: 768px) {
+  .panel-right { flex-direction: column-reverse; } 
+  .lateral-controls { flex: 1; flex-direction: row; flex-wrap: wrap; }
+  .lateral-controls .toolbar { flex-direction: row; }
+}

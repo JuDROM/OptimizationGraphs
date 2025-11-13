@@ -1,0 +1,268 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+/* frontend/src/App.css */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.graph-editor-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Para ocupar toda la altura de la pantalla */
+  width: 100vw; /* Para ocupar todo el ancho de la pantalla */
+}
+
+/* CUADRO NEGRO: TÍTULO */
+.main-header {
+  background-color: #333; /* Negro */
+  color: white;
+  padding: 15px 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0; /* No se encoge */
+}
+.main-header h1 {
+  margin: 0;
+  font-size: 1.8em;
+}
+.main-header p {
+  margin: 5px 0 0;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+/* CUADRO ROJO: BOTONES DE MATRIZ Y BÚSQUEDA */
+.controls-top-bar {
+  background-color: #ff3333; /* Rojo */
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap; /* Para que los elementos se ajusten si la pantalla es pequeña */
+  flex-shrink: 0;
+}
+
+.controls-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-weight: bold;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+/* Contenido Principal: Paneles laterales y grafo central */
+.main-content {
+  display: flex;
+  flex-grow: 1; /* Ocupa el espacio restante verticalmente */
+  overflow: hidden; /* Para que el contenido interno de los paneles pueda hacer scroll */
+}
+
+/* Panel Lateral Izquierdo (CUADRO GRIS y CUADRO MORADO) */
+.side-panel {
+  flex-basis: 300px; /* Ancho fijo para los paneles laterales */
+  flex-shrink: 0;
+  padding: 15px;
+  overflow-y: auto; /* Permite scroll si el contenido es demasiado largo */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.left-panel {
+  background-color: #cccccc; /* Gris */
+  border-right: 1px solid #ddd;
+}
+
+.adjacency-matrix-section {
+  flex-shrink: 0; /* No se encoge */
+}
+
+.math-representation-section {
+  flex-grow: 1; /* Ocupa el espacio restante en el panel izquierdo */
+  background-color: #9370db; /* Morado */
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+}
+
+/* Contenedor del Grafo Central (AZUL GRANDE) */
+.graph-viewer-container {
+  flex-grow: 1; /* Ocupa todo el espacio central restante */
+  background-color: #87ceeb; /* Azul claro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* Necesario para que el canvas de vis-network se ajuste */
+}
+
+.graph-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* Panel Lateral Derecho (CUADRO VERDE y CUADRO VINO TINTO) */
+.right-panel {
+  background-color: #66cc66; /* Verde */
+  border-left: 1px solid #ddd;
+}
+
+.editor-controls-section {
+  flex-shrink: 0;
+}
+
+.selected-nodes-section {
+  flex-shrink: 0;
+  margin-top: 20px;
+}
+
+/* CUADRO VINO TINTO: RESULTADOS DE BÚSQUEDA (Panel inferior) */
+.results-panel {
+  background-color: #800000; /* Vino tinto */
+  color: white;
+  padding: 15px 20px;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  text-align: center;
+}
+.results-panel h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.results-panel p {
+  margin-bottom: 5px;
+  font-size: 0.95em;
+}
+.results-panel strong {
+  color: #ffebcd; /* Un poco más claro para destacar */
+}
+
+
+/* --- Estilos Generales para Botones --- */
+.btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.btn.active {
+  background-color: #28a745; /* Verde para el botón activo */
+}
+
+.button-group.vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.button-group.vertical .btn {
+  width: 100%; /* Ocupa todo el ancho disponible */
+}
+
+/* Estilos para AdjacencyMatrix y MathRepresentation dentro de sus secciones */
+.panel-section h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.adjacency-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: white;
+}
+.adjacency-matrix th, .adjacency-matrix td {
+  border: 1px solid #ccc;
+  padding: 5px;
+  text-align: center;
+  min-width: 40px;
+}
+.adjacency-matrix th {
+  background-color: #e9e9e9;
+}
+.adjacency-matrix input {
+  width: 30px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.math-representation-section pre {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
