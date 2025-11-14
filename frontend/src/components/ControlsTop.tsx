@@ -32,7 +32,7 @@ export default function ControlsTop({
           />{' '}
           Grafo dirigido
         </label>
-        <button className="btn" onClick={onClearMatrix}>
+        <button className="btn" onClick={() => onClearMatrix()}>
           Limpiar Matriz
         </button>
         <button className="btn" onClick={onLoadExample}>

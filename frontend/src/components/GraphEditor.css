@@ -38,29 +38,88 @@
 }
 
 /* <header horizontal> */
+
 .main-header {
   display: flex;
-  flex-direction: row; /* Apila horizontalmente: [header-titulo] y [header-controles] */
+  flex-direction: row;
   gap: 10px;
-  align-items: stretch; /* Estira ambos al mismo alto */
+  align-items: center;
+  flex-wrap: nowrap; /* Fuerza una sola línea, sin quebrantos */
+  overflow-x: auto; /* Si no cabe, permite scroll horizontal */
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 10px 12px; /* Aumentado 50% */
+  border-radius: 6px;
+  min-height: 75px; /* Aumentado 50% de 50px */
 }
 
-.header-titulo {
-  flex-shrink: 0; /* No se encoge (título fijo) */
-  margin-right: 10px; /* Separación pedida */
+.Header-title {
+  flex-shrink: 0; /* No se encoge */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  white-space: nowrap; /* Impide que el título se rompa */
 }
 
-.header-controles {
-  flex: 1; /* Ocupa el resto del espacio */
+.Header-title h1 {
+  margin: 0;
+  font-size: 1.2rem; /* Aumentado 50% de 0.95rem */
+  line-height: 1;
+  white-space: nowrap;
 }
 
-/* Estilo para botones horizontales dentro de ControlsTop */
-.header-controles .controls-top {
+.Header-title p {
+  margin: 0;
+  font-size: 0.9rem; /* Aumentado 50% de 0.7rem */
+  color: #666;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Forzar ControlsTop a estar en la misma línea */
+.main-header > .controls-top {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap; /* Si no caben, bajan */
-  gap: 8px;
+  flex-wrap: nowrap; /* No permite que bajen a otra línea */
+  gap: 6px;
   align-items: center;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0; /* No se encoge */
+  white-space: nowrap;
+}
+
+/* Botones más compactos */
+.controls-top .input-row,
+.controls-top .actions-row {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: nowrap; /* Impedir que los elementos bajen */
+  white-space: nowrap;
+}
+
+.controls-top .btn {
+  padding: 5px 8px;
+  font-size: 0.85rem;
+  flex-shrink: 0; /* No se encoge */
+  white-space: nowrap;
+}
+
+.controls-top label {
+  padding: 0;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.controls-top input[type="checkbox"] {
+  margin: 0;
+  flex-shrink: 0;
 }
 
 /* <div matrizvista> */
@@ -73,13 +132,15 @@
 }
 
 .panel-matriz {
-  flex: 1; /* Ocupa 1 parte */
+  flex: 1.5; /* Aumentado para hacer la matriz más ancha */
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 2; /* Por encima del grafo para que sus labels no se vean */
 }
 
 .panel-grafo {
-  flex: 2; /* Ocupa 2 partes (más grande) */
+  flex: 1.3; /* Reducido más para hacer el grafo más estrecho */
   display: flex;
   flex-direction: column;
   padding: 0; /* El canvas no necesita padding */
@@ -89,10 +150,10 @@
 
 /* <botonesEditor(verde)/> */
 .panel-lateral {
-  flex: 1; /* Ocupa 1 parte (igual que matriz) */
+  flex: 0.6; /* Reducido significativamente */
   display: flex;
   flex-direction: column;
-  min-width: 280px; /* Ancho mínimo para que los botones se vean bien */
+  min-width: 130px; /* Reducido de 200px */
 }
 
 /* <div horizontal> (footer) */
@@ -146,12 +207,16 @@
   flex: 1 1 auto; /* occupy remaining space inside .panel-grafo */
   min-height: 0; /* allow flex children to shrink properly */
   display: flex;
+  position: relative; /* Necesario para que z-index funcione correctamente */
+  z-index: 1; /* Asegurar que el canvas esté debajo de otros elementos */
 }
 
 .graph-canvas {
   flex: 1 1 auto;
   width: 100%;
   height: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 

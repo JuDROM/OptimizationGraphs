@@ -1,11 +1,16 @@
-# backend/app.py
+# backend/app.py (Corregido)
+
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS # <-- Importar
 import json
 import heapq
 import numpy as np
 import os
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
+
+# Inicializa CORS globalmente
+CORS(app)
 
 INF = float('inf')
 
@@ -64,9 +69,6 @@ def dijkstra(graph, start_node, end_node, num_nodes):
             continue
         for v, weight in graph[u].items():
             if weight < 0:
-                # Dijkstra no funciona con pesos negativos, pero aquí
-                # lo "ignoramos" (no lanzamos error, pero el resultado puede ser incorrecto)
-                # El frontend debería avisar al usuario.
                 pass
             distance = current_distance + weight
             if distance < distances[v]:
@@ -110,8 +112,26 @@ def index():
     }
     return jsonify(info)
 
-@app.route('/find_path', methods=['POST'])
+@app.route('/test', methods=['GET'])
+def test_route():
+    print("--- LA RUTA DE TEST SÍ FUNCIONA ---")
+    return jsonify({"message": "El test funcionó. El servidor está actualizado."})
+
+@app.route('/find_path', methods=['POST', 'OPTIONS'])
 def find_path():
+    
+    # --- INICIO DE LA CORRECCIÓN MANUAL DE CORS ---
+    # Esto captura la solicitud 'OPTIONS' (preflight) y responde
+    # con las cabeceras correctas antes de que el código 'POST' se ejecute.
+    if request.method == 'OPTIONS':
+        response = app.make_response(jsonify({"message": "Preflight OK"}))
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+        response.headers.add("Access-Control-Allow-Methods", "POST,OPTIONS")
+        return response
+    # --- FIN DE LA CORRECCIÓN MANUAL DE CORS ---
+
+    # Si el método es 'POST', el código continúa aquí
     try:
         data = request.get_json()
         matrix_data = data['matrix']
@@ -133,8 +153,6 @@ def find_path():
                     if weight < 0:
                         has_negative_weights = True
                     if not is_directed and i != j:
-                        # Para no dirigidos, asegurarse de que la arista exista en ambas direcciones
-                        # Si el usuario solo llenó una celda, la replicamos.
                         if str(matrix_data[j][i]).strip() == "":
                              graph[j][i] = weight
 
@@ -143,8 +161,6 @@ def find_path():
 
         if algorithm == 'dijkstra':
             if has_negative_weights:
-                # Dijkstra no es garantía con pesos negativos.
-                # Bellman-Ford es el algoritmo preferido en este caso.
                 pass 
             min_distance, path_result = dijkstra(graph, start_node_index, end_node_index, n)
         elif algorithm == 'bellman-ford':
@@ -175,12 +191,14 @@ def find_path():
                 'algorithm': algorithm
             }
 
-        return jsonify(response)
+        # ¡Importante! Asegúrate de que la respuesta POST también incluya la cabecera
+        # aunque CORS(app) debería manejar esto, no hace daño ser explícito.
+        response_json = jsonify(response)
+        response_json.headers.add("Access-Control-Allow-Origin", "*")
+        return response_json
 
     except Exception as e:
         return jsonify({'error': f'Error en el procesamiento de datos: {str(e)}'}), 500
 
 if __name__ == '__main__':
-    from flask_cors import CORS
-    CORS(app)
     app.run(debug=True, port=5000, host="0.0.0.0")

@@ -32,11 +32,7 @@ export default function AdjacencyMatrix({
               <th
                 key={'h' + j}
                 // --- LÓGICA DE CLASE SIMPLIFICADA ---
-                className={
-                  hoverRC.col === j
-                    ? 'hover-col'
-                    : ''
-                }
+                className={hoverRC.col === j ? 'hover-col' : ''}
               >
                 {nodeNameFromIndex(j)}
               </th>
@@ -45,20 +41,8 @@ export default function AdjacencyMatrix({
         </thead>
         <tbody>
           {Array.from({ length: numNodes }).map((_, i) => (
-            <tr
-              key={'r' + i}
-              // --- LÓGICA DE CLASE SIMPLIFICADA ---
-              className={
-                hoverRC.row === i
-                  ? 'hover-row'
-                  : ''
-              }
-            >
-              <th
-                className={
-                  hoverRC.col === i ? 'hover-col' : ''
-                }
-              >
+            <tr key={'r' + i} className={hoverRC.row === i ? 'hover-row' : ''}>
+              <th className={hoverRC.row === i ? 'hover-row' : ''}>
                 {nodeNameFromIndex(i)}
               </th>
               {Array.from({ length: numNodes }).map((_, j) => (
@@ -66,12 +50,7 @@ export default function AdjacencyMatrix({
                   key={`c-${i}-${j}`}
                   onMouseEnter={() => onCellEnter(i, j)}
                   onMouseLeave={onCellLeave}
-                  // --- LÓGICA DE CLASE SIMPLIFICADA ---
-                  className={
-                    hoverRC.col === j
-                      ? 'hover-col'
-                      : ''
-                  }
+                  className={`${hoverRC.row === i ? 'hover-row' : ''} ${hoverRC.col === j ? 'hover-col' : ''}`.trim()}
                 >
                   <input
                     className="matrix-input"

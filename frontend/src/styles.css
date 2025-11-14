@@ -17,10 +17,17 @@
   font-family: Inter, Roboto, Arial, sans-serif;
 }
 
+/* Remove default top margin for the whole app so there is no gap at the top of the page */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
 body {
   background: var(--bg);
   color: var(--text-dark);
-  margin: 18px;
+  margin: 0;
 }
 
 .app-root {
@@ -175,14 +182,13 @@ header p {
 }
 
 .adjacency-matrix thead th {
-  position: sticky;
-  top: 0;
+  /* Keep header inside table flow (not sticky) so it doesn't overlay content */
+  position: static;
   background: var(--accent);
   color: var(--text-light);
   padding: 10px;
   text-align: center;
   font-weight: 600;
-  z-index: 1;
 }
 
 .adjacency-matrix th,
@@ -196,8 +202,7 @@ header p {
   background: var(--accent); 
   color: var(--text-light); 
   font-weight: 600;
-  position: sticky;
-  left: 0;
+  position: static; /* keep row headers inside table flow */
 }
 
 .matrix-input {
@@ -208,19 +213,52 @@ header p {
   text-align: center;
 }
 
+.matrix-input {
+  width: 60px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  text-align: center;
+  background: transparent; /* inputs are transparent by default so the cell background shows through */
+}
+
+/* Hover and focus visuals for cells */
 .adjacency-matrix td:hover,
 .matrix-input:focus {
   outline: none;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.hover-row,
-.selected-row {
-  background: var(--accent-light);
+/* Stronger highlights for hovered row / column */
+.adjacency-matrix tr.hover-row td,
+.adjacency-matrix td.hover-row {
+  background: #cfe9ff; /* light but stronger blue */
 }
-.hover-col,
-.selected-col {
-  background: var(--accent-light);
+.adjacency-matrix thead th.hover-col,
+.adjacency-matrix td.hover-col,
+.adjacency-matrix tbody tr th.hover-col {
+  background: #cfe9ff;
+}
+
+/* Intersection cell (row & column) gets most prominent color */
+.adjacency-matrix td.hover-row.hover-col {
+  background: #2a8bff; /* prominent blue */
+  color: #fff;
+}
+
+/* Inputs inside hovered cells become white to remove the blue tint and improve readability */
+.adjacency-matrix td.hover-row .matrix-input,
+.adjacency-matrix td.hover-col .matrix-input,
+.adjacency-matrix td.hover-row.hover-col .matrix-input {
+  background: #fff;
+  color: #000;
+  border-color: rgba(0,0,0,0.08);
+}
+
+/* Keep header/row labels readable when highlighted */
+.adjacency-matrix thead th.hover-col,
+.adjacency-matrix tbody tr th.hover-row {
+  color: var(--text-light);
 }
 
 /* Sección de Resultados */

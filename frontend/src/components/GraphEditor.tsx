@@ -40,11 +40,15 @@ export default function GraphEditor(): React.JSX.Element {
     }
   }, [mode]);
 
-  function handleClearMatrix(initialNodes = 2): void {
-    const m: Matrix = Array.from({ length: initialNodes }, () =>
-      new Array(initialNodes).fill('')
-    );
-    setNumNodes(initialNodes);
+  // Accept either a number (explicit initial node count) or calls from DOM event handlers
+  // (which pass a MouseEvent). Normalize to a positive integer defaulting to 2.
+  function handleClearMatrix(initialNodes: unknown = 2): void {
+    let count = 2;
+    if (typeof initialNodes === 'number' && Number.isFinite(initialNodes) && initialNodes > 0) {
+      count = Math.floor(initialNodes);
+    }
+    const m: Matrix = Array.from({ length: count }, () => new Array(count).fill(''));
+  setNumNodes(count);
     setMatrix(m);
     setSelectedA(null);
     setSelectedB(null);
@@ -167,11 +171,10 @@ export default function GraphEditor(): React.JSX.Element {
         <div className="main-left-column">
           
           <header className="main-header">
-            <div className="header-titulo header-negro">
+              <div className="Header-title">
               <h1>Editor Interactivo de Grafos</h1>
               <p>Usa los controles para construir un grafo o cargar un ejemplo.</p>
-            </div>
-            <div className="header-controles controls-rojo">
+              </div>
               <ControlsTop
                 isDirected={isDirected}
                 onDirectedChange={setIsDirected}
@@ -180,7 +183,6 @@ export default function GraphEditor(): React.JSX.Element {
                 onFindPath={handleFindPath}
                 mode={mode}
               />
-            </div>
           </header>
 
           <div className="matriz-vista-container">
