@@ -23,15 +23,14 @@ export default function AdjacencyMatrix({
   onCellLeave,
 }: MatrixProps): React.JSX.Element {
   return (
-    <section className="matrix-container">
+    <div className="matrix-container">
       <table className="adjacency-matrix">
         <thead>
           <tr>
-            <th></th>
+            <th aria-label="Matriz de adyacencia"></th>
             {Array.from({ length: numNodes }).map((_, j) => (
               <th
                 key={'h' + j}
-                // --- LÓGICA DE CLASE SIMPLIFICADA ---
                 className={hoverRC.col === j ? 'hover-col' : ''}
               >
                 {nodeNameFromIndex(j)}
@@ -58,6 +57,8 @@ export default function AdjacencyMatrix({
                     onChange={(e) => onCellChange(i, j, e.target.value)}
                     disabled={!isDirected && i > j}
                     inputMode="numeric"
+                    aria-label={`Peso de ${nodeNameFromIndex(i)} a ${nodeNameFromIndex(j)}`}
+                    placeholder="—"
                   />
                 </td>
               ))}
@@ -65,6 +66,6 @@ export default function AdjacencyMatrix({
           ))}
         </tbody>
       </table>
-    </section>
+    </div>
   );
 }

@@ -18,39 +18,43 @@ export default function LateralControls({
 }: LateralControlsProps): React.JSX.Element {
   return (
     <div className="lateral-controls">
-      {/* <p><strong>Modo de Edición:</strong></p> */}
       <div className="toolbar">
         <button
           className={`btn ${mode === 'select' ? 'active' : ''}`}
           onClick={() => onModeChange('select')}
+          aria-pressed={mode === 'select'}
         >
-          🔍 Seleccionar Nodos (A/B)
+          🔍 Seleccionar Nodos
         </button>
         <button
           className={`btn ${mode === 'addNode' ? 'active' : ''}`}
           onClick={() => onModeChange('addNode')}
+          aria-pressed={mode === 'addNode'}
         >
           ➕ Añadir Nodo
         </button>
         <button
           className={`btn ${mode === 'addEdge' ? 'active' : ''}`}
           onClick={() => onModeChange('addEdge')}
+          aria-pressed={mode === 'addEdge'}
         >
           🔗 Añadir Conexión
         </button>
       </div>
 
-      <div className="selected-nodes">
-        <strong>Modo Selección:</strong>
-        <div>
-          Nodo A:{' '}
-          {selectedA === null ? '(Ninguno)' : nodeNameFromIndex(selectedA)}
+      {mode === 'select' && (
+        <div className="selected-nodes">
+          <strong>Nodos Seleccionados:</strong>
+          <div>
+            <span style={{ fontWeight: 600 }}>Nodo A:</span>{' '}
+            {selectedA === null ? '(Ninguno)' : nodeNameFromIndex(selectedA)}
+          </div>
+          <div>
+            <span style={{ fontWeight: 600 }}>Nodo B:</span>{' '}
+            {selectedB === null ? '(Ninguno)' : nodeNameFromIndex(selectedB)}
+          </div>
         </div>
-        <div>
-          Nodo B:{' '}
-          {selectedB === null ? '(Ninguno)' : nodeNameFromIndex(selectedB)}
-        </div>
-      </div>
+      )}
     </div>
   );
 }

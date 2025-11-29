@@ -20,23 +20,21 @@ export default function ControlsTop({
   mode,
 }: ControlsTopProps): React.JSX.Element {
   return (
-    // Esta sección ya no tiene su propio fondo, 
-    // será estilizada por el div ".controls-rojo" en el padre
-    <div className="controls-top"> 
+    <div className="controls-top">
       <div className="input-row">
         <label>
           <input
             type="checkbox"
             checked={isDirected}
             onChange={(e) => onDirectedChange(e.target.checked)}
-          />{' '}
+          />
           Grafo dirigido
         </label>
         <button className="btn" onClick={() => onClearMatrix()}>
-          Limpiar Matriz
+          🗑️ Limpiar Matriz
         </button>
         <button className="btn" onClick={onLoadExample}>
-          Cargar ejemplo
+          📊 Cargar ejemplo
         </button>
       </div>
       <div className="actions-row">
@@ -44,15 +42,17 @@ export default function ControlsTop({
           className="btn"
           onClick={() => onFindPath('bellman-ford')}
           disabled={mode !== 'select'}
+          title={mode !== 'select' ? 'Selecciona el modo "Seleccionar Nodos" primero' : ''}
         >
-          Buscar (Bellman-Ford)
+          🔍 Bellman-Ford
         </button>
         <button
           className="btn"
           onClick={() => onFindPath('dijkstra')}
           disabled={mode !== 'select'}
+          title={mode !== 'select' ? 'Selecciona el modo "Seleccionar Nodos" primero' : ''}
         >
-          Buscar (Dijkstra)
+          ⚡ Dijkstra
         </button>
       </div>
     </div>

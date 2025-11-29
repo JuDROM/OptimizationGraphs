@@ -52,11 +52,19 @@ export default function MathRepresentation({
   }, [matrix, numNodes, isDirected]);
 
   return (
-    <section className="math-representation">
-      <h4>Representación Matemática</h4>
-      <p><strong>G = {'{'} N, A {'}'}</strong></p>
-      <p><strong>N =</strong> {mathematicalRepresentation.nSet}</p>
-      <p><strong>A =</strong> {mathematicalRepresentation.aSet}</p>
-    </section>
+    <div className="math-representation">
+      <p style={{ marginBottom: 'var(--space-3)' }}>
+        <strong style={{ color: 'var(--indigo-600)' }}>G</strong> ={' '}
+        <strong>{'{'} N, A {'}'}</strong>
+      </p>
+      <p style={{ marginBottom: 'var(--space-2)' }}>
+        <strong style={{ color: 'var(--indigo-600)' }}>N</strong> ={' '}
+        {mathematicalRepresentation.nSet}
+      </p>
+      <p style={{ margin: 0 }}>
+        <strong style={{ color: 'var(--indigo-600)' }}>A</strong> ={' '}
+        {mathematicalRepresentation.aSet || '{ }'}
+      </p>
+    </div>
   );
 }
